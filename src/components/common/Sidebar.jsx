@@ -1,28 +1,28 @@
 import React from "react";
-
+import {Link} from 'react-router-dom';
 function Sidebar({ isVisible, activePage, setActivePage }) {
   const links = [
-    { name: 'Dashboard', icon: 'fas fa-tachometer-alt' },
-    { name: 'Projects', icon: 'fas fa-project-diagram' },
-    { name: 'Tasks', icon: 'fas fa-tasks' },
-    { name: 'Reports', icon: 'fas fa-chart-line' },
-    { name: 'Settings', icon: 'fas fa-cog' },
+    { name: 'dashboard', icon: 'fas fa-tachometer-alt' },
+    { name: 'usermaster', icon: 'fas fa-user' },
+    { name: 'clientmaster', icon: 'fas fa-users' },
+    { name: 'itemmaster', icon: 'fas fa-clipboard-list' },
+    { name: 'invoicemaster', icon: 'fas fa-file-invoice' },
   ];
-
+  console.log("links ", links);
+  console.log("link123 ", links.map(link => link.name))
   return (
     <nav className={`sidebar ${!isVisible ? 'hide' : ''}`} id="sidebar">
       {links.map(link => (
-        <a
+        <Link
           key={link.name}
-          href="javascript:void(0)"
+          to={`/${link.name}`}
           className={activePage === link.name ? 'active' : ''}
           onClick={() => setActivePage(link.name)}
         >
           <i className={`${link.icon} me-2`}></i> {link.name}
-        </a>
+        </Link>
       ))}
     </nav>
   );
 }
-
 export default Sidebar;

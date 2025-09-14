@@ -1,46 +1,23 @@
 import React from "react";
-
+import Dashboard from "../Dashboard";
+import Usermaster from "../usermaster";
+import Clientmaster from "../clientmaster";
+import Itemmaster from "../Itemmaster";
+import Invoicemaster from "../Invoicemaster";
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 function Content({ sidebarVisible }) {
   return (
     <main className={`content ${!sidebarVisible ? 'full' : ''}`} id="mainContent">
-      <div className="container-fluid">
-        <div className="row g-4">
-          <div className="col-md-3 col-sm-6">
-            <div className="card text-bg-primary">
-              <div className="card-body">
-                <h5>Active Projects</h5>
-                <h3>24</h3>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3 col-sm-6">
-            <div className="card text-bg-warning">
-              <div className="card-body">
-                <h5>Pending Tasks</h5>
-                <h3>58</h3>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3 col-sm-6">
-            <div className="card text-bg-success">
-              <div className="card-body">
-                <h5>Monthly Revenue</h5>
-                <h3>$89,450</h3>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3 col-sm-6">
-            <div className="card text-bg-info">
-              <div className="card-body">
-                <h5>Deployment Success</h5>
-                <h3>92%</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* <BrowserRouter> */}
+          <Routes>
+              <Route path='/dashboard' element={<Dashboard /> } />
+              <Route path='/usermaster' element={<Usermaster /> } />
+              <Route path='/clientmaster' element={<Clientmaster /> } />
+              <Route path='/itemmaster' element={<Itemmaster /> } />
+              <Route path='/invoicemaster' element={<Invoicemaster /> } />
+          </Routes>
+      {/* </BrowserRouter> */}
     </main>
   );
 }
-
 export default Content;
