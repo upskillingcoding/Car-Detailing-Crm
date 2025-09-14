@@ -7,7 +7,7 @@ import Invoicemaster from "../Invoicemaster";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 function Content({ sidebarVisible }) {
   return (
-    <main className={`content ${!sidebarVisible ? 'full' : ''}`} id="mainContent">
+    <main className={`content ${!sidebarVisible ? 'full' : ''}`} id="mainContent" style={{ padding: '2rem'}}>
       {/* <BrowserRouter> */}
           <Routes>
               <Route path='/dashboard' element={<Dashboard /> } />

@@ -20,7 +20,7 @@ function RootLayout() {
         activePage={activePage}
         setActivePage={setActivePage}
       />
-      <Content sidebarVisible={sidebarVisible} />
+      <Content sidebarVisible={sidebarVisible}/>
     </>
   );
 }

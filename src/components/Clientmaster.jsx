@@ -3,7 +3,9 @@ import React from 'react';
 function Clientmaster(){
     return (
         <>
-            <h2>Client Master</h2>
+            <div style={{ backgroundColor: '#fff', padding: '2rem 1rem', boxShadow: ' rgba(100, 100, 111, 0.2) 0px 7px 29px 0px', borderRadius: '5px', height: '81vh' }}>
+                <h2>Client Master</h2>
+            </div>
         </>
     );
 }

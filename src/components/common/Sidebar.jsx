@@ -11,6 +11,7 @@ function Sidebar({ isVisible, activePage, setActivePage }) {
   console.log("links ", links);
   console.log("link123 ", links.map(link => link.name))
   return (
+    <>
     <nav className={`sidebar ${!isVisible ? 'hide' : ''}`} id="sidebar">
       {links.map(link => (
         <Link
@@ -22,7 +23,12 @@ function Sidebar({ isVisible, activePage, setActivePage }) {
           <i className={`${link.icon} me-2`}></i> {link.name}
         </Link>
       ))}
+
+      <div style={{color: 'red', bottom: '0', position: 'fixed', zIndex: '99'}}>
+      Setting
+    </div>
     </nav>
+    </>
   );
 }
 export default Sidebar;
