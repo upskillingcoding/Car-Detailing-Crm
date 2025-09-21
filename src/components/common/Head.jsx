@@ -11,7 +11,7 @@ function Head({ onToggleSidebar }) {
         <i className="fas fa-bars fa-lg"></i>
       </button>
 
-      <h4 className="mb-0 text-white">🚀 DevOps Dashboard</h4>
+      <h4 className="mb-0 text-white">🚀 Car-Crm Detailing</h4>
 
       <div className="dropdown">
         <a href="#" className="text-white dropdown-toggle" data-bs-toggle="dropdown">
