@@ -24,7 +24,7 @@ function Usermaster() {
                 </ul>
                 <div className="tab-content" id="myTabContent">
                     <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        {/* <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="container mt-3">
                                 <div className="row">
                                     <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
@@ -46,7 +46,7 @@ function Usermaster() {
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> */}
 
                         <div className="mt-2">
                             <h1></h1>
