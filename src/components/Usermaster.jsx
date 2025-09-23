@@ -1,15 +1,27 @@
-import React from 'react';
-import { useForm } from 'react-hook-form'
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import {createUser } from '../actions/userAction';
 
 function Usermaster() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [users, setUsers] = useState([]);
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        mobile: "",
+        password:""
+    });
 
-    const onSubmit = (data) => {
-        console.log("FormData ", data);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await createUser(form); 
+        setForm({
+            name: "",
+            email:"",
+            mobile: "",
+            password: ""
+        })
     }
-
-
 
     return (
         <>
@@ -27,20 +39,20 @@ function Usermaster() {
                         {/* <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="container mt-3">
                                 <div className="row">
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name" {...register("searchName", { required: true })} />
                                         <label for="floatingInput">Name</label>
                                     </div>
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No." {...register("searchMobile", { required: true })} />
                                         <label for="floatingInput">Mobile No.</label>
                                     </div>
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" {...register("searchEmail", { required: true })} />
                                         <label for="floatingInput">Email address</label>
                                     </div>
 
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
                                         <button type="submit" class="btn btn-outline-success" style={{ width: '49%', height: '3.6rem', marginRight: '2%' }}>Search</button>
                                         <button type="button" class="btn btn-outline-danger" style={{ width: '49%', height: '3.6rem' }}>Cancel</button>
                                     </div>
@@ -95,33 +107,29 @@ function Usermaster() {
 
                     </div>
                     <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit}>
                             <div className="container mt-3">
                                 <div className="row">
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name" {...register("name", { required: true })} />
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})}/>
                                         <label for="floatingInput">Name</label>
-                                        {errors.name && <small className='text-danger'>Name is required </small>}
                                     </div>
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No." {...register("mobile", { required: true })} />
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No." value={form.mobile} onChange={(e) => setForm({...form, mobile: e.target.value})}/>
                                         <label for="floatingInput">Mobile No.</label>
-                                        {errors.mobile && <small className='text-danger'>Mobile is required</small>}
                                     </div>
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" {...register("email", { required: true })} />
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
                                         <label for="floatingInput">Email address</label>
-                                        {errors.email && <small className='text-danger'>Email is required</small>}
                                     </div>
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="password" class="form-control" id="floatingInput" placeholder="*****" {...register("password", { required: true })} />
-                                        <label for="floatingInput">Password</label>
-                                        {errors.password && <small className='text-danger'>Password is required</small>}
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                        <input type="password" class="form-control" id="floatingInput" placeholder="*****" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})}/>
+                                        <label for="floatingInput">Password</label>                                    
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div class="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <button type="button" class="btn btn-outline-danger" style={{ width: '49%', marginRight: '2%' }}>Cancel</button>
+                                    <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
+                                        {/* <button type="button" class="btn btn-outline-danger" style={{ width: '49%', marginRight: '2%' }}>Cancel</button> */}
                                         <button type="submit" class="btn btn-outline-success" style={{ width: '49%' }}>Save</button>
                                     </div>
                                 </div>
@@ -133,5 +141,4 @@ function Usermaster() {
         </>
     );
 }
-
 export default Usermaster;
