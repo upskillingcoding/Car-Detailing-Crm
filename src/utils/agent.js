@@ -11,6 +11,9 @@ const API = axios.create({
 
 
 export const UserAPI  = {
-    getAll: () => API.get("/Usermaster.php"),
-    create: (data) => API.post('/USermaster.php', data),
+    // getAll: () => API.get("/Usermaster.php"),
+    // create: (data) => API.post('/USermaster.php', data),
+
+    getAll: () => API.get("?action=getAll"),
+    create: (data) => API.post("?action=create", data),
 }

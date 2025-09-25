@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import {createUser } from '../actions/userAction';
+import { createUser, getUsers } from '../actions/userAction';
 
 function Usermaster() {
 
@@ -9,19 +9,46 @@ function Usermaster() {
         name: "",
         email: "",
         mobile: "",
-        password:""
+        password: ""
     });
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await createUser(form); 
-        setForm({
-            name: "",
-            email:"",
-            mobile: "",
-            password: ""
-        })
+        try {
+            const response = await createUser(form);
+            console.log("yes done ", response);
+
+            if (response.message) {
+                alert(response.message);
+            }
+            setForm({
+                name: "",
+                email: "",
+                mobile: "",
+                password: ""
+            })
+        } catch (error) {
+            console.error("Error while saving user :", error);
+        }
     }
+
+    const fetchUsers = async () => {
+        try {
+            const fetchData = await getUsers();
+            console.log(fetchData)
+            setUsers(fetchData);
+        } catch (error) {
+            console.error("Error fetching : ", error);
+        }
+    }
+
+
+
 
     return (
         <>
@@ -36,19 +63,19 @@ function Usermaster() {
                 </ul>
                 <div className="tab-content" id="myTabContent">
                     <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        {/* <form onSubmit={handleSubmit(onSubmit)}>
+                        <form >
                             <div className="container mt-3">
                                 <div className="row">
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name" {...register("searchName", { required: true })} />
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name"/>
                                         <label for="floatingInput">Name</label>
                                     </div>
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No." {...register("searchMobile", { required: true })} />
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No."/>
                                         <label for="floatingInput">Mobile No.</label>
                                     </div>
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" {...register("searchEmail", { required: true })} />
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"/>
                                         <label for="floatingInput">Email address</label>
                                     </div>
 
@@ -58,7 +85,7 @@ function Usermaster() {
                                     </div>
                                 </div>
                             </div>
-                        </form> */}
+                        </form>
 
                         <div className="mt-2">
                             <h1></h1>
@@ -68,6 +95,7 @@ function Usermaster() {
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Edit</th>
                                         <th scope="col">S.No.</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Mobile No.</th>
@@ -75,31 +103,23 @@ function Usermaster() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Ritik</td>
-                                        <td>73106035114</td>
-                                        <td>ritik@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Pawan</td>
-                                        <td>7310603555</td>
-                                        <td>pawan@gmail.com</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Vaibhav</td>
-                                        <td>9898987458</td>
-                                        <td>vaibhav@gmail.com</td>
-                                    </tr>
+                                    {users.map((u, index) => (
+                                        <tr key={u.id}>
+                                            <th scope="row">Edit</th>
+                                            <th scope="row">{index + 1}</th>
+                                            <td>{u.username}</td>
+                                            <td>{u.usermobileno}</td>
+                                            <td>{u.usermail}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
+
                             </table>
                         </div>
 
                         <div
                             className="row"
-                            style={{ position: 'fixed',bottom: '2.5rem',left: '50%',transform: 'translateX(-50%)'}} >
+                            style={{ position: 'fixed', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)' }} >
                             <div>
                                 <p>pagination</p>
                             </div>
@@ -111,20 +131,20 @@ function Usermaster() {
                             <div className="container mt-3">
                                 <div className="row">
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})}/>
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                                         <label for="floatingInput">Name</label>
                                     </div>
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No." value={form.mobile} onChange={(e) => setForm({...form, mobile: e.target.value})}/>
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="Enter Mobile No." value={form.mobile} onChange={(e) => setForm({ ...form, mobile: e.target.value })} />
                                         <label for="floatingInput">Mobile No.</label>
                                     </div>
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                                         <label for="floatingInput">Email address</label>
                                     </div>
                                     <div className="form-floating mb-3 col-lg-3 col-md-3 col-sm-12 ps-1">
-                                        <input type="password" class="form-control" id="floatingInput" placeholder="*****" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})}/>
-                                        <label for="floatingInput">Password</label>                                    
+                                        <input type="password" class="form-control" id="floatingInput" placeholder="*****" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                                        <label for="floatingInput">Password</label>
                                     </div>
                                 </div>
                                 <div className="row">
